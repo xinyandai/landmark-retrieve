@@ -34,7 +34,7 @@ Given an image, find all of the same landmarks in a dataset. [kaggle: landmark-r
     ```
     * generate submissions
     ```
-    ## read k neareset neighbor and replace retrieve result in sample_submission
+    ## read k neareset neighbor and replace retrieve result in data/sample_submission.csv
     ## python3 submit.py <features_name> <submission_file>
     python3 submit.py landmark_cnn sub.csv
     ```
