@@ -2,7 +2,7 @@
 Given an image, find all of the same landmarks in a dataset. [kaggle: landmark-retrieval-challenge](https://www.kaggle.com/c/landmark-retrieval-challenge)
 
 
-## run
+## before run
 * download data set index files
     - data/sample_submission.csv
     - data/index.csv
