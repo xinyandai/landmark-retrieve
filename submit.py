@@ -1,8 +1,6 @@
 #! python3
 import numpy as np
 
-nn_result = './data/landmark_cnn/landmark_cnn_euclidean_groundtruth.lshbox'
-
 
 def read_indexes(file_name):
     indexes = []
@@ -66,11 +64,17 @@ if __name__ == '__main__':
         features_name = sys.argv[1]
         submission_file = sys.argv[2]
     else:
-        print('\033[93m', 'use default features_name submission_file')
-        print('\033[93m', 'usage: python3 submit.py <features_name> <submission_file>')
+        print('\033[93m', 'use default features_name submission_file metric')
+        print('\033[93m', 'usage: python3 submit.py <features_name> <submission_file> [euclidean/product/angular]')
 
     query_indexes_file = './data/%s/%s_query_index.txt' % (features_name, features_name)
     train_indexes_file = './data/%s/%s_base_index.txt' % (features_name, features_name)
+
+    metric = 'euclidean'
+    if len(sys.argv) > 3 :
+        metric = sys.argv[3]
+
+    nn_result = './data/%s/%s_%s_groundtruth.lshbox' % (features_name, features_name, metric)
 
     replace_submission(
         sample_submission,
