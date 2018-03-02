@@ -9,7 +9,8 @@ Given an image, find all of the same landmarks in a dataset. [kaggle: landmark-r
     - data/test.csv
 * download data set from website
     ```
-    python3 download.py <data_file.csv> <output_dir/>
+    ## python3 download.py <data_file.csv> <output_dir/>
+    
     ## train data
     python3 download.py data/index.csv output_dir/train
     ## test data
@@ -28,11 +29,13 @@ Given an image, find all of the same landmarks in a dataset. [kaggle: landmark-r
     * for each test data's feature, find k nearest neighbor in train data
     ```
     cd script
-    sh nns.sh
+    ## generate k neareset neighbor to ./data/landmark_cnn/landmark_cnn_euclidean_groundtruth.lshbox
+    sh nns.sh 
     ```
     * generate submissions
     ```
-    # python3 submit.py <features_name> <submission_file>
+    ## read k neareset neighbor and replace retrieve result in sample_submission
+    ## python3 submit.py <features_name> <submission_file>
     python3 submit.py landmark_cnn sub.csv
     ```
     * submit sub.csv
