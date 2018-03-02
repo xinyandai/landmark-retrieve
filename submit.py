@@ -1,7 +1,7 @@
 #! python3
 import numpy as np
 
-nn_result = '../data/landmark_groundtruth.lshbox'
+nn_result = './data/landmark_cnn/landmark_cnn_euclidean_groundtruth.lshbox'
 
 
 def read_indexes(file_name):
@@ -56,10 +56,10 @@ def replace_submission(sample_sub_file, nn_array, submission_file, query_indexes
 
 
 if __name__ == '__main__':
-    submission_file = '../data/sub.csv'
-    sample_submission = '../data/sample_submission.csv'
-    query_indexes_file = '../data/test_features_index.txt'
-    train_indexes_file = '../data/train_features_index.txt'
+    submission_file = './data/sub.csv'
+    sample_submission = './data/sample_submission.csv'
+    query_indexes_file = './data/landmark_cnn/landmark_cnn_query_index.txt'
+    train_indexes_file = './data/landmark_cnn/landmark_cnn_base_index.txt'
 
     replace_submission(
         sample_submission,
