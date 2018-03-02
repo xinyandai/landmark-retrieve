@@ -56,10 +56,21 @@ def replace_submission(sample_sub_file, nn_array, submission_file, query_indexes
 
 
 if __name__ == '__main__':
-    submission_file = './data/sub.csv'
     sample_submission = './data/sample_submission.csv'
-    query_indexes_file = './data/landmark_cnn/landmark_cnn_query_index.txt'
-    train_indexes_file = './data/landmark_cnn/landmark_cnn_base_index.txt'
+
+    features_name = 'landmark_cnn'
+    submission_file = './data/sub.csv'
+
+    import sys
+    if len(sys.argv) > 2:
+        features_name = sys.argv[1]
+        submission_file = sys.argv[2]
+    else:
+        print('\033[93m', 'use default features_name submission_file')
+        print('\033[93m', 'usage: python3 submit.py <features_name> <submission_file>')
+
+    query_indexes_file = './data/%s/%s_query_index.txt' % (features_name, features_name)
+    train_indexes_file = './data/%s/%s_base_index.txt' % (features_name, features_name)
 
     replace_submission(
         sample_submission,

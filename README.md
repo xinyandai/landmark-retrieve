@@ -22,7 +22,8 @@ Given an image, find all of the same landmarks in a dataset. [kaggle: landmark-r
 * Exact Nearest Neighbor with CNN features (acc:0.014, rank 10/48)
     * use pre-trained AlexNet extract features for train and test data
     ```
-    python3 cnn.py
+    ## python cnn.py <features_name> <test_images_folder> <train_images_folder>
+    python3 cnn.py landmark_cnn output_dir/test output_dir/train
     ```
     * for each test data's feature, find k nearest neighbor in train data
     ```
@@ -31,6 +32,8 @@ Given an image, find all of the same landmarks in a dataset. [kaggle: landmark-r
     ```
     * generate submissions
     ```
-    python3 submit.py
+    # python3 submit.py <features_name> <submission_file>
+    python3 submit.py landmark_cnn sub.csv
     ```
+    * submit sub.csv
     
