@@ -19,14 +19,14 @@ if __name__ == '__main__':
         print('\033[93m', 'use default features_name test_images_folder train_images_folder')
         print('\033[93m', 'usage: python cnn.py <features_name> <test_images_folder> <train_images_folder>')
 
-    exit()
+    # make directory
     os.system('mkdir ./data/%s' % features_name)
-    # test data features
 
+    # test data features extract
     filename = './data/%s/%s_query' % (features_name, features_name)
     cnn_features(test_images, filename, if_gpu=if_gpu)
-    # train data features
 
+    # train data features extract
     filename = './data/%s/%s_base' % (features_name, features_name)
     cnn_features(train_images, filename, if_gpu=if_gpu)
 
