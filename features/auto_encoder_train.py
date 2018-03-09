@@ -8,11 +8,9 @@ from torchvision import models
 # torch.manual_seed(1)    # reproducible
 
 # Hyper Parameters
-EPOCH = 10
-BATCH_SIZE = 64
-LR = 0.005         # learning rate
-N_TEST_IMG = 5
-
+EPOCH = 1
+BATCH_SIZE = 100
+LR = 0.01         # learning rate
 INPUT_SHAPE = (224, 224)
 
 
@@ -30,7 +28,6 @@ class AutoEncoder(nn.Module):
             nn.Linear(512, 4096),
             nn.Tanh(),
             nn.Linear(4096, 256 * 6 * 6),
-            # nn.Sigmoid(),  # compress to a range (0, 1)
         )
 
     def forward(self, x):
@@ -39,7 +36,7 @@ class AutoEncoder(nn.Module):
         return encoded, decoded
 
 
-def train_auto_encoder(image_dir, input_size, save_path, if_gpu=False):
+def train_auto_encoder(image_dir, input_size, save_path, if_gpu):
     train_data = SingleFolderDataSet(image_dir, transform=transforms.Compose([
         transforms.Resize(size=input_size),
         transforms.ToTensor(),
@@ -48,7 +45,9 @@ def train_auto_encoder(image_dir, input_size, save_path, if_gpu=False):
     train_loader = Data.DataLoader(dataset=train_data, batch_size=BATCH_SIZE, shuffle=True)
 
     auto_encoder = AutoEncoder()
+    auto_encoder.load_state_dict(torch.load(save_path))
     alex = models.alexnet(pretrained=True)
+
     if if_gpu:
         alex.cuda()
         auto_encoder.cuda()
@@ -74,20 +73,29 @@ def train_auto_encoder(image_dir, input_size, save_path, if_gpu=False):
             encoded, decoded = auto_encoder(b_x)
 
             loss = loss_func(decoded, b_y)  # mean square error
-            optimizer.zero_grad()  # clear gradients for this training step
-            loss.backward()  # back propagation, compute gradients
-            optimizer.step()  # apply gradients
+            optimizer.zero_grad()           # clear gradients for this training step
+            loss.backward()                 # back propagation, compute gradients
+            optimizer.step()                # apply gradients
 
-            if step % 50 == 0:
+            if step % 100 == 0:
                 print('Epoch: ', epoch, '| train loss: %.4f' % loss.data[0])
 
-    torch.save(auto_encoder, save_path)
+    # torch.save(auto_encoder, save_path)
     # the_model = torch.load(save_path)
+    torch.save(auto_encoder.state_dict(), save_path)
+    auto_encoder.load_state_dict(torch.load(save_path))
+    print(auto_encoder)
 
 
 if __name__ == '__main__':
 
+    save_path = './auto_encoder.torch'
+
+    the_model = AutoEncoder()
+    the_model.load_state_dict(torch.load(save_path))
+    print(the_model)
+
     test_images = '/home/xinyan/programs/data/landmark/test'
     train_images = '/home/xinyan/programs/data/landmark/train'
 
-    train_auto_encoder(train_images, INPUT_SHAPE, './cnn_feature_encoder.torch',  False)
+    train_auto_encoder(train_images, INPUT_SHAPE, save_path,  False)
